@@ -1,0 +1,237 @@
+:root{
+  --bg1:#0f1724;
+  --bg2:#172031;
+  --card:#2b3947;
+  --accent:#7dd3fc;
+  --muted:#94a3b8;
+  --btn:#60a5fa;
+  --win:#93c5fd;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: "Noto Sans JP", "Arial", sans-serif;
+  background: linear-gradient(180deg,var(--bg1),var(--bg2));
+  color: #eef2ff;
+  overscroll-behavior: none;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+.container{
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+#gold{
+  position:absolute;
+  top:12px;
+  left:50%;
+  transform:translateX(-50%);
+  font-weight:700;
+  font-size:20px;
+  color:var(--win);
+}
+#enemy{
+  width:200px;
+  height:200px;
+  background:linear-gradient(180deg,#ffffff,#f3f4f6);
+  border-radius:8px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.45);
+  position:absolute;
+  top:28%;
+  left:50%;
+  transform:translateX(-50%);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#enemyHpContainer{
+  width:240px;
+  height:26px;
+  background:#4b5563;
+  position:absolute;
+  top:22%;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:8px;
+  overflow:hidden;
+}
+#enemyHp{
+  height:100%;
+  width:100%;
+  background:linear-gradient(90deg,#34d399,#10b981);
+  transition:width .18s linear, background .18s linear;
+}
+#enemyHpText{
+  position:absolute;
+  top:18%;
+  left:50%;
+  transform:translate(-50%,-120%);
+  font-size:15px;
+  color:#eef2ff;
+  background:transparent;
+  font-weight:600;
+}
+#expContainer{
+  width:460px;
+  height:20px;
+  background:#3f4b57;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:84px;
+  border-radius:10px;
+  overflow:hidden;
+}
+#expBar{
+  height:100%;
+  width:0;
+  background:#ffffff;
+  transition:width .18s linear;
+}
+#level{
+  position:absolute;
+  bottom:112px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:18px;
+}
+#autoAttackToggle{
+  position:absolute;
+  left:20px;
+  top:50%;
+  transform:translateY(-50%);
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.04);
+  cursor:pointer;
+  font-weight:700;
+  color:#fff;
+}
+.sideBtn{
+  position:absolute;
+  right:20px;
+  padding:10px 14px;
+  border-radius:10px;
+  background:var(--card);
+  border:1px solid rgba(255,255,255,0.04);
+  cursor:pointer;
+  margin-bottom:8px;
+  color:#ecfeff;
+  font-weight:700;
+}
+#upgradeBtn{top:45%}
+#craftBtn{top:35%}
+#fishBtn{top:25%}
+#inventoryBtn{top:55%}
+/* メニュー */
+.menuScreen{
+  display:none;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:44%;
+  height:66%;
+  background:linear-gradient(180deg,var(--card),#243241);
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.04);
+  padding:18px;
+  box-shadow:0 12px 30px rgba(2,6,23,0.6);
+  overflow:auto;
+}
+.menuScreen h2{margin:4px 0 12px 0;font-size:20px;color:var(--accent)}
+.menuScreen .muted{color:var(--muted);font-size:13px;margin-bottom:8px}
+.menuScreen .bigBtn{
+  display:block;
+  margin:10px auto;
+  padding:10px 16px;
+  border-radius:10px;
+  background:linear-gradient(90deg,var(--btn),#3b82f6);
+  border:none;
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+}
+.menuScreen button:disabled{opacity:.45;cursor:not-allowed}
+#inventoryList{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:center;
+  margin-top:8px;
+}
+.invItem{
+  width:85%;
+  padding:8px 12px;
+  background:rgba(255,255,255,0.03);
+  border-radius:8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.invItem button{
+  padding:6px 8px;
+  border-radius:6px;
+  background:#06b6d4;
+  border:none;
+  color:#012;
+  cursor:pointer;
+  font-weight:700;
+}
+#fishingArea{
+  width:120px;
+  height:120px;
+  background:linear-gradient(180deg,#93c5fd,#7dd3fc);
+  border-radius:999px;
+  margin:10px auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
+}
+#fishingBarContainer{
+  width:86%;
+  height:28px;
+  background:#3b4250;
+  border-radius:8px;
+  margin:12px auto;
+  overflow:hidden;
+  display:none;
+}
+#fishingBar{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#a7f3d0,#60a5fa);
+  transition:width .05s linear;
+}
+#boostDisplay{
+  position:absolute;
+  right:16px;
+  bottom:10px;
+  color:#a7f3d0;
+  font-weight:700;
+}
+.badge{
+  background:rgba(255,255,255,0.06);
+  padding:6px 8px;
+  border-radius:8px;
+  font-weight:700;
+}
+.goldGain{
+  position:absolute;
+  color:#fde68a;
+  font-weight:800;
+  font-size:16px;
+  animation:floatUp 1s ease-out forwards;
+}
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-36px);opacity:0}
+}
+@media(max-width:900px){
+  .menuScreen{width:90%;height:72%}
+  #expContainer{width:85%}
+}

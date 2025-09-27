@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Web RPG (Full)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div id="gold">Gold: 0</div>
+    <div id="enemyHpContainer"><div id="enemyHp"></div></div>
+    <div id="enemyHpText">100 / 100</div>
+    <div id="enemy">ENEMY</div>
+    <div id="level">Level: 1</div>
+    <div id="expContainer"><div id="expBar"></div></div>
+    <button id="autoAttackToggle">自動攻撃: OFF</button>
+    <button id="fishBtn" class="sideBtn">釣り</button>
+    <button id="craftBtn" class="sideBtn">クラフト</button>
+    <button id="upgradeBtn" class="sideBtn">アップグレード</button>
+    <button id="inventoryBtn" class="sideBtn">インベントリ</button>
+    <div id="boostDisplay"></div>
+
+    <!-- アップグレード -->
+    <div id="upgradeMenu" class="menuScreen">
+      <h2>アップグレード</h2>
+      <div class="muted">ポイント: <span id="upgradePoints">0</span></div>
+      <div style="display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:8px">
+        <div class="badge">自動攻撃: <span id="uiAutoAttack">未購入</span></div>
+        <div class="badge">攻撃力Lv: <span id="uiAttackPower">0</span>/10</div>
+        <div class="badge">攻撃速度Lv: <span id="uiAttackSpeed">0</span>/5</div>
+        <div class="badge">ゴールドブーストLv: <span id="uiGoldBoost">0</span>/5</div>
+      </div>
+      <button id="buyAutoAttack" class="bigBtn">自動攻撃を購入 (必要: 1P)</button>
+      <button id="buyAttackPower" class="bigBtn">攻撃力アップを購入</button>
+      <button id="buyAttackSpeed" class="bigBtn">自動攻撃速度を購入</button>
+      <button id="buyGoldBoost" class="bigBtn">ゴールド増加を購入</button>
+      <div style="margin-top:14px;">
+        <button id="resetUpgrades" class="bigBtn" style="background:#f97316">アップグレードをリセット (50 Gold)</button>
+      </div>
+      <button id="closeUpgrade" class="bigBtn" style="background:#ef4444">閉じる</button>
+    </div>
+
+    <!-- クラフト -->
+    <div id="craftMenu" class="menuScreen">
+      <h2>クラフト</h2>
+      <div class="muted">釣竿は1個のみ作成可能。石の剣は何個でも作成可。</div>
+      <div class="invItem" style="width:90%;justify-content:space-between">
+        <div><strong>釣竿</strong><div class="muted">費用: Gold 5000</div></div>
+        <div><button id="craftRodBtn">作成</button></div>
+      </div>
+      <div class="invItem" style="width:90%;justify-content:space-between">
+        <div><strong>石の剣</strong><div class="muted">費用: Gold150, 木材×5, 石×9</div></div>
+        <div><button id="craftStoneSwordBtn">作成</button></div>
+      </div>
+      <div style="margin-top:12px" class="muted">所持: <span id="uiWood">木材 0</span> / <span id="uiStone">石 0</span> / <span id="uiSwords">石の剣 0</span></div>
+      <button id="closeCraft" class="bigBtn" style="background:#ef4444">閉じる</button>
+    </div>
+
+    <!-- 釣り -->
+    <div id="fishMenu" class="menuScreen">
+      <h2>釣り</h2>
+      <div id="fishingArea"></div>
+      <div class="muted">釣りの成果（確率）: ポーション(ポイント2x) 15% / ポーション(Exp2x) 15% / 木材 35% / 石 35%</div>
+      <button id="fishActionBtn" class="bigBtn" style="background:linear-gradient(90deg,#34d399,#10b981)">釣る</button>
+      <div id="fishingBarContainer"><div id="fishingBar"></div></div>
+      <button id="closeFish" class="bigBtn" style="background:#ef4444">閉じる</button>
+    </div>
+
+    <!-- インベントリ -->
+    <div id="inventoryMenu" class="menuScreen">
+      <h2>インベントリ</h2>
+      <div class="muted">釣りや他で入手したアイテムを表示。ポーションはここで使用できます。</div>
+      <div id="inventoryList"></div>
+      <div style="margin-top:8px" class="muted">※ 石の剣は作成すると恒久的に攻撃力に反映されます。</div>
+      <button id="closeInventory" class="bigBtn" style="background:#ef4444">閉じる</button>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
