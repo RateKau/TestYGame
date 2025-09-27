@@ -67,20 +67,73 @@ function calculateAttackMultiplier(){
   return attackPowerMultiplier*swordMultiplier;
 }
 function getEffectiveDamage(){return baseDamage*calculateAttackMultiplier();}
-function attackEnemy(){
-  enemyHp-=getEffectiveDamage();
-  if(enemyHp<=0){
-    const rewardGold=5*(upgrades.goldBoost+1)*(boostEffects.point2x>0?2:1);
-    const rewardExp=2*(boostEffects.exp2x>0?2:1);
-    gold+=rewardGold;exp+=rewardExp;
-    floatGold(rewardGold);updateGold();updateExpUI();
-    while(exp>=requiredExp(level)&&level<maxLevel){
-      exp-=requiredExp(level);level++;upgradePoints++;
-    }
-    enemyMaxHp=100+Math.floor(level/5)*50;enemyHp=enemyMaxHp;
-  }
-  updateEnemyHp();saveData();
+function showError(msg){
+    const errEl = document.createElement('div');
+    errEl.style.position = 'fixed';
+    errEl.style.left = '50%';
+    errEl.style.top = '60%';
+    errEl.style.transform = 'translate(-50%, -50%)';
+    errEl.style.padding = '12px 20px';
+    errEl.style.background = 'rgba(239,68,68,0.9)';
+    errEl.style.color = '#fff';
+    errEl.style.fontWeight = '700';
+    errEl.style.borderRadius = '12px';
+    errEl.style.boxShadow = '0 6px 20px rgba(0,0,0,0.4)';
+    errEl.style.zIndex = '9999';
+    errEl.style.opacity = '0';
+    errEl.style.transition = 'all 0.5s ease';
+    errEl.textContent = msg;
+    document.body.appendChild(errEl);
+    
+    setTimeout(()=>{errEl.style.opacity='1'; errEl.style.transform='translate(-50%, -60%)';},50);
+    setTimeout(()=>{
+        errEl.style.opacity='0';
+        errEl.style.transform='translate(-50%, -40%)';
+        setTimeout(()=>errEl.remove(),500);
+    },2000);
 }
+
+function attackEnemy() {
+    try {
+        const damage = getEffectiveDamage();
+        enemyHp -= damage;
+        if(enemyHp < 0) enemyHp = 0; // HPが負にならないようにする
+
+        updateEnemyHp();
+
+        if(enemyHp <= 0){
+            const rewardGold = Math.floor(5 * (upgrades.goldBoost + 1) * (boostEffects.point2x > 0 ? 2 : 1));
+            const rewardExp  = Math.floor(2 * (boostEffects.exp2x > 0 ? 2 : 1));
+
+            if(isNaN(rewardGold) || isNaN(rewardExp)){
+                showError('報酬計算でエラー発生');
+                return;
+            }
+
+            gold += rewardGold;
+            exp  += rewardExp;
+            floatGold(rewardGold);
+            updateGold();
+            updateExpUI();
+
+            // レベルアップ判定
+            while(exp >= requiredExp(level) && level < maxLevel){
+                exp -= requiredExp(level);
+                level++;
+                upgradePoints++;
+            }
+
+            // 次の敵を出す
+            enemyMaxHp = 100 + Math.floor(level / 5) * 50;
+            enemyHp = enemyMaxHp;
+            updateEnemyHp();
+        }
+    } catch(e) {
+        console.error(e);
+        showError('攻撃処理でエラー発生: ' + e.message);
+    }
+}
+
 document.getElementById('enemy').addEventListener('click',()=>{if(!currentlyFishing)attackEnemy();});
 
 function showMenu(id){document.querySelectorAll('.menuScreen').forEach(m=>m.style.display='none');document.getElementById(id).style.display='block';}
